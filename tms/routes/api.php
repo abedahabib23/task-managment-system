@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ProjectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +16,14 @@ use App\Http\Controllers\Api\AuthController;
 |
 */
 
-Route::post('auth/register', [AuthController::class, 'register']);
-Route::post('auth/login', [AuthController::class, 'login']);
+Route::post('/auth/register', [AuthController::class, 'register']);
+Route::post('/auth/login', [AuthController::class, 'login']);
 Route::prefix('/auth')->middleware('auth:api')->group(function () {
     Route::get('/me', [AuthController::class, 'show']);
     Route::post('/logout', [AuthController::class, 'logout']);
+
+});
+Route::middleware('auth:api')->group(function () {
+    Route::apiResource('/projects', ProjectController::class);
 
 });
