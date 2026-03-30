@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Task extends Model
+{
+    use HasFactory;
+        protected $fillable = [
+        'title',
+        'description',
+        'due_date',
+          'priority',
+          'status',
+          'user_id',
+          'project_id'
+    ];
+    protected $hidden = [
+        'user_id',
+        'project_id'
+    ];
+   protected $with = [
+    'creator',
+    'project'
+   ];
+      public function creator()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+       public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id', 'id');
+    }
+}
