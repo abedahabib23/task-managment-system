@@ -24,5 +24,14 @@ class Project extends Model
     {
         return $this->hasMany(Task::class, 'project_id', 'id');
     }
+        public function members()
+    {
+        return $this->belongsToMany(
+            User::class,
+            'project_members',
+            'project_id',
+            'user_id'
+        )->withPivot('role', 'permission', 'added_at');
+    }
 
 }

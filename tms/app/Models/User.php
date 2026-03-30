@@ -63,4 +63,13 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Task::class, 'user_id', 'id');
     }
+     public function projects()
+    {
+        return $this->belongsToMany(
+            Project::class,
+            'project_members',
+            'user_id',
+            'project_id'
+        )->withPivot('role', 'permission', 'added_at');
+    }
 }
